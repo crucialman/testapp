@@ -1,6 +1,6 @@
 //load libraries
-var http = require('http'):
-var mongoose = require('mongoose');
+var http = require('http');
+var mariadb = require('mariasql');
 var express = require('express');
 
 //define variable for application
@@ -11,8 +11,8 @@ var db;
 var config = {
 	"USER" : "ubuntu",
 	"PASS" : "",
-	"HOST" : "ec2-54-163-70-105.compute-1.amazonaws.com",
-	"PORT" : "27017",
+	"HOST" : "ec2-54-224-72-25.compute-1.amazonaws.com",
+	"PORT" : "3306",
 	"DATABASE"	: "my_example"
 };
 
@@ -27,16 +27,16 @@ var standardGreeting = 'hello World!';
 
 
 //create schema
-var greetingSchema = mongoose.Scheme({
+var greetingSchema = mariadb.Schema({
 	sentence: String
 });
-var Greeting = mariadb.model('Greetingreetingschema);
+var Greeting = mariadb.model('Greetingreetingschema');
 
 db = mariadb.connect(dbPath);
 
 
 //create the greetingin the db
-mongoose.connection.once('openunction() { 
+mongoose.connection.once('open',function() { 
 var greeting; 
 Greeting.find( function(err, greetings){    
 	if( !greetings ){      
@@ -56,10 +56,10 @@ res.send(greeting.sentence);
 
 app.use(function(err, req, res, next){ 
 if (req.xhr) { 
-res.send(500, 'Something went wrong!'); 
+   res.send(500, 'Something went wrong!'); 
 } 
 else { 
-next(err); 
+    next(err); 
 } 
 });
 //Finally, you need t0 start the Express Webserver:
